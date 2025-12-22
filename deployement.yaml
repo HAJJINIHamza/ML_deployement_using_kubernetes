@@ -1,0 +1,41 @@
+apiVersion : apps/v1
+kind : Deployment 
+metadata : 
+  name : ml-api-deployment #name of the deployment 
+  labels : 
+    app : ml-api-predictor
+spec : 
+  replicas : 1 #number of instances
+  selector :
+    matchLabels : 
+      app : ml-api-predictor 
+  template : 
+    metadata :
+      labels : 
+        app : ml-api-predictor
+    spec : 
+      containers : 
+        - name : ml-api-container #an identifier that can be choosen by developer
+          image : hajjinihamza/kubernetes_ml:0.1 #Image name from docker hub
+          imagePullPolicy : IfNotPresent #Only pull image from hub if not present locally
+          ports :  
+          - containerPort : 8000 #port defined in main.py
+          resources :
+            limits : 
+              memory : "512Mi"
+              cpu : "500m"
+
+---
+apiVersion : v1
+kind : Service 
+metadata :
+  name : ml-api-service #name of the service 
+spec : 
+  #Selects all pods with label app = ml-api-predictor
+  selector : 
+    app : ml-api-predictor
+  ports : 
+    - protocol : TCP 
+      port : 80 #The port that service exposes 
+      targetPort : 8000 #The port the container is listening on 
+  type : NodePort # Exposes the service outside the cluster, making it easy to access 
