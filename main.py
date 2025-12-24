@@ -29,6 +29,19 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+#Health check (Aliveness)
+@app.get("/health")
+def health():
+    return {"status": "Health ok"}
+
+#Readiness check
+@app.get("/ready")
+def ready():
+    if model is None:
+        return {"status": "Model not ready"}
+    
+    return {"status":"Model ok"}
+
 @app.post("/predict", response_model=List[int])
 def predict(iris_features : IrisVariables):
 
