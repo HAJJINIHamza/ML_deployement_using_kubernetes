@@ -1,0 +1,13 @@
+apiVersion : v1 #Service configuration
+kind : Service 
+metadata :
+  name : ml-api-service #name of the service 
+spec : 
+  #Selects all pods with label app = ml-api-predictor
+  selector : 
+    app : ml-api-predictor
+  ports : 
+    - protocol : TCP 
+      port : 80 #The port that service exposes 
+      targetPort : 8000 #The port the container is listening on 
+  type : NodePort # Exposes the service outside the cluster, making it easy to access 
