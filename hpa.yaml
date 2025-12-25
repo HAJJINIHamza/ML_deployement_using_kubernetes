@@ -1,0 +1,18 @@
+apiVersion : autoscaling/v2 #Horizontal Pod Autoscaler configuration
+kind : HorizontalPodAutoscaler 
+metadata :
+  name : ml-api-hpa 
+spec :
+  scalerTargetRef : #Deployment we seek to scale 
+    apiVersion : apps/v1
+    kind : Deployment
+    name : ml-api-deployment
+  minReplicas : 1 
+  maxReplicas : 3
+  metrics : #Metrics used to decide weather to scale or not
+    - type : Resource 
+      resource : 
+        name : cpu 
+        type : Utilization 
+        target : 
+          averageUtilization : 50 #When more then 50% CPU is being used, scale up
