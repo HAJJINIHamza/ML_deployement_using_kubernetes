@@ -3,7 +3,7 @@ kind : HorizontalPodAutoscaler
 metadata :
   name : ml-api-hpa 
 spec :
-  scalerTargetRef : #Deployment we seek to scale 
+  scaleTargetRef : #Deployment we seek to scale 
     apiVersion : apps/v1
     kind : Deployment
     name : ml-api-deployment
@@ -13,6 +13,6 @@ spec :
     - type : Resource 
       resource : 
         name : cpu 
-        type : Utilization 
-        target : 
+        target :
+          type : Utilization 
           averageUtilization : 50 #When more then 50% CPU is being used, scale up
