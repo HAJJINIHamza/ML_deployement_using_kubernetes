@@ -84,8 +84,8 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
 
     In terminal 1 : `ngrok tunnel`
 
-    Start an ngrok session : `ngrok http --host-header=ml-api.local 80`. This gives you a url 
+    In terminal 2 : Start an ngrok session : `ngrok http --host-header=ml-api.local 80`. This gives you a url 
 
-    Check the ngrok url using `curl url/health`. Check also in browser. 
+    In terminal 3 : Check the ngrok url using `curl url/health`. Check also in browser. 
 
 
