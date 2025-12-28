@@ -3,7 +3,7 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
 
 ### Deployment steps 
 
-* Deployment configuration 
+1. Deployment configuration 
 
     Add deployment config to deployment.yaml
     
@@ -13,7 +13,7 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     
     Check by `kubectl get pods`
 
-* Service configuration 
+2. Service configuration 
 
     Add service config to service.yaml
     
@@ -21,13 +21,13 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     
     Check by `kubectl get service`
 
-* (Optional) Now you can check if application work correctly
+3. (Optional) Now you can check if application work correctly
 
     Run `minikube service service_name` --url
     
     You find service_name in `kubectl get service`
 
-* Health and readiness (before using application check if application is healthy and model is loaded and ready to be used)
+4. Health and readiness (before using application check if application is healthy and model is loaded and ready to be used)
 
     Go to main.py (FastAPI) and add /health, def health(), /ready, and def ready() endpoints and functions
     
@@ -36,7 +36,7 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     push your image to docker hub `docker push `
 
 
-* HPA : horizontal pods autoscaling 
+5. HPA : horizontal pods autoscaling 
 
     Add hpa config to hpa.yaml 
     
@@ -46,7 +46,7 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     
     If doesn't have access to metrics service (CPU ressources) use : `kubectl addons enable metrics-server`
 
-* Check if HPA works, using Hey 
+6. Check if HPA works, using Hey 
 
     Install Hey first
     
@@ -60,7 +60,7 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     
     In terminal 3 : `kubectl get service -w`
 
-* Add ingress :
+7. Add ingress :
 
     Enable ingress controler `kubectl addons enable ingress`
 
@@ -73,3 +73,19 @@ Deploy ML model and scale using FastAPI, Docker and Kubernetes
     If link doesn't work it could be a kubernetes <-> docker problem
     
     how to debug ingres : `kubectl get ingress`, `kubectl describe ingress <name>` and `kubectl get pods -n ingress-nginx`
+
+8. (Optional) you can create a public URL, that others can use using ngrok
+
+    Download ngrok from https://ngrok.com/download
+
+    Put it in C:/system/ngrok, and add its path to you path
+
+    Verfiy installation with : `ngrok version`
+
+    In terminal 1 : `ngrok tunnel`
+
+    Start an ngrok session : `ngrok http --host-header=ml-api.local 80`. This gives you a url 
+
+    Check the ngrok url using `curl url/health`. Check also in browser. 
+
+
