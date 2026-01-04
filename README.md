@@ -1,7 +1,18 @@
 # ML_deployement_using_kubernetes
-Deploy ML model and scale using FastAPI, Docker and Kubernetes
+This repo will teach you how to deploy and  scale you machine learning application, using FastAPI, Docker and kubernetes.
+
+### Content
+    - Deployment configuration, deployment files
+    - Service configuration
+    - Adding Health and readiness to check application health and readiness for usage
+    - Autoscaling using HPA
+    - Add ingress to expose service via HTTP
+    - Add ngrok to create a URL for public demos 
 
 ### Deployment steps 
+ML Project steps : 
+
+prepare data --> train model --> evaluate model --> build docker image --> push docker image to docker hub --> deployment with kubernetes (We stand here)
 
 1. Deployment configuration 
 
