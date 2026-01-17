@@ -10,10 +10,10 @@ on :
 
 jobs : 
   test : 
-    runs_on : ubuntu-latest
+    runs-on : ubuntu-latest
 
     steps : 
-      - name : check out repository 
+      - name : Check out repository 
         uses : actions/checkout@v2
 
       - name : Set up python 
