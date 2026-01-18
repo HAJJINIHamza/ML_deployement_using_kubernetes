@@ -2,8 +2,11 @@ import contextlib
 import pickle
 from typing import List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from fastapi import HTTPException
 from pydantic import BaseModel
+
+from app.dependencies.get_model import get_model
 
 
 class IrisVariables(BaseModel):
@@ -12,17 +15,20 @@ class IrisVariables(BaseModel):
     p_length: float
     p_width: float
 
-
+#Initiate model
+    
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
     global model
     try:
         with open("models/vanilla_model.pkl", "rb") as f:
-            model = pickle.load(f)
+            app.state.model = pickle.load(f)
     except FileNotFoundError:
         print("Can't find file")
+        app.state.model = None
     except Exception as e:
         print(f"Error : {e}")
+        app.state.model = None
     yield
 
 
@@ -42,7 +48,7 @@ def health():
 
 # Readiness check
 @app.get("/ready")
-def ready():
+def ready(model = Depends(get_model)):
     if model is None:
         return {"status": "Model not ready"}
 
@@ -50,10 +56,15 @@ def ready():
 
 
 @app.post("/predict", response_model=List[int])
-def predict(iris_features: IrisVariables):
+def predict(
+    iris_features: IrisVariables,
+    model = Depends(get_model)):
 
-    if not model:
-        return {"error": "No model found"}
+    if model is None:
+        raise HTTPException (
+            status_code = 503,
+            detail = "Model not loaded"
+        )
 
     data = [
         [
