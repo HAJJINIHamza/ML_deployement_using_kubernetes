@@ -103,17 +103,33 @@ prepare data --> train model --> evaluate model --> build docker image --> push 
 ### CI/CD (via Github actioins) steps 
 
 1. Add CI workflow configuration 
-- Create .github/workflows/file.yaml
-- Add config to yaml file, now eveytime you push code, steps in configuration will be executed
+
+    Create .github/workflows/file.yaml
+
+    Add config to yaml file, now eveytime you push code, steps in configuration will be executed
 
 2. Add requirements-dev.txt, it will contain necessary dependencies for github actions to be executed
-- You might need to add pytest library to the file
+    
+    You might need to add pytest library to the file
 
 3. Add code quality test using black and ruff
-- Add balck and ruff to requirements-dev.txt
-- Add new file : pyproject.toml, it will contain black and ruff parameters and config (what qualities to verify in code)
-- Add commands (`balck --check .` and `ruff check .`) to file.yaml
-- Git Push and check github actions 
+
+    Add balck and ruff to requirements-dev.txt
+    
+    Add new file : pyproject.toml, it will contain black and ruff parameters and config (what qualities to verify in code)
+    
+    Add commands (`balck --check .` and `ruff check .`) to file.yaml
+    
+    Git Push and check github actions 
+
+4. Add API contract checks in tests
+
+    Add test_api.py file in tests
+
+    Add test_health, test_readiness and test_predict in test_api.py
+
+    Note: test_predict shouldn't test the real model, only a mock model, that is why you need to add MockModel class in test_api.py
+
 
 
 
