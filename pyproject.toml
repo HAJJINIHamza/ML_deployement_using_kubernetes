@@ -9,3 +9,6 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "F", "I"]
 
+[tool.pytest.ini_options]
+markers = ["model: tests that requires a trained model"]
+
