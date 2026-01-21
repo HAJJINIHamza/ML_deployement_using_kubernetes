@@ -9,6 +9,7 @@ on :
       - main
 
 jobs : 
+  #Code and unit tests
   build-and-test : 
     runs-on : ubuntu-latest
 
@@ -36,6 +37,21 @@ jobs :
       - name : Run tests 
         run : pytest
 
+  #Docker build test image
+  docker-test:
+    name : Build Docker Test Image 
+    runs-on : ubuntu-latest
+    steps : 
+      - name : Check out repo
+        uses : actions/checkout@v2
+      
+      - name : Build test image
+        run : docker build --target test -t kubernetes_ml:test .
+      
+      - name : Run test in docker test image
+        run : docker run --rm kubernetes_ml:test
+
+  # Docker build for production
   docker-build :
     name : Build Docker Image
     runs-on : ubuntu-latest
