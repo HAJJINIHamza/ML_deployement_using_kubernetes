@@ -36,4 +36,12 @@ jobs :
       - name : Run tests 
         run : pytest
 
-        
+  docker-build :
+    name : Build Docker Image
+    runs-on : ubuntu-latest
+    steps :
+      - name : Check out code
+        uses : actions/checkout@v2
+      
+      - name : Build Docker Image
+        run : docker build -t kubernetes_ml:ci . 
