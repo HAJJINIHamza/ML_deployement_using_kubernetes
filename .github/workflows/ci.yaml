@@ -51,13 +51,21 @@ jobs :
       - name : Run test in docker test image
         run : docker run --rm kubernetes_ml:test
 
-  # Docker build for production
-  docker-build :
-    name : Build Docker Image
+  #Docker build production image 
+  docker-push :
+    name : Build and Push Docker Image
     runs-on : ubuntu-latest
-    steps :
-      - name : Check out code
-        uses : actions/checkout@v2
-      
-      - name : Build Docker Image
-        run : docker build -t kubernetes_ml:ci . 
+    needs : docker-test
+    if : github.ref == "refs/heads/main"
+
+    steps : 
+      - uses : actions/checkout@v2
+
+      - name : Log in to Docker Hub
+        run : echo "${{ secrets.DOCKERHUB_TOKEN}}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME}}" --password-stdin
+
+      - name : Build Docker image
+        run : docker build -t hajjinihamza/kubernetes-ml:latest .
+
+      - name : Push image to docker hub
+        run : docker push hajjinihamza/kubernetes-ml:latest
