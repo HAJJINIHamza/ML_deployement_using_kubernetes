@@ -100,7 +100,7 @@ prepare data --> train model --> evaluate model --> build docker image --> push 
     In terminal 3 : Check the ngrok url using `curl url/health`. Check also in browser. 
 
 
-### CI/CD (via Github actioins) steps 
+### CI/CD (via Github actions) steps 
 
 1. Add CI workflow configuration 
 
@@ -118,7 +118,7 @@ prepare data --> train model --> evaluate model --> build docker image --> push 
     
     Add new file : pyproject.toml, it will contain black and ruff parameters and config (what qualities to verify in code)
     
-    Add commands (`balck --check .` and `ruff check .`) to file.yaml
+    Add commands (`black --check .` and `ruff check .`) to file.yaml
     
     Git Push and check github actions 
 
