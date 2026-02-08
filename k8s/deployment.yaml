@@ -16,8 +16,8 @@ spec :
     spec : 
       containers : 
         - name : ml-api-container #an identifier that can be choosen by developer
-          image : hajjinihamza/kubernetes_ml:0.2 #Image name from docker hub
-          imagePullPolicy : IfNotPresent #Only pull image from hub if not present locally
+          image : hajjinihamza/kubernetes-ml:latest #Image name from docker hub
+          imagePullPolicy : Always #Only pull image from hub if not present locally
           ports :  
           - containerPort : 8000 #port defined in main.py
           resources :
